@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <locale.h>
+
 int main()
 {
 	setlocale(LC_ALL, "Rus");
@@ -37,7 +38,9 @@ int main()
 		kol ++;
 		}
 	
-	if (kol>1) {
+	
+
+	if (kol>2) {
 		if (y3 == 0 && z1 == 0 && y1 == 0 && z3 == 0 && x3 == 0 && z2 == 0 && x1 == 0 && x2 == 0 && y2 == 0) printf("Ранг системы 0 \n");
 		else
 		printf("Ранг системы 1 \n");
@@ -45,10 +48,12 @@ int main()
 	else if (kom==1) printf("Ранг системы 2 \n");
 	else printf("Ранг системы 3 \n");
 	if (kom == 1 && kol==0) {
-		int a = 0, b = 0;
-		b = (x2 * y1 - x1 * y2) / (x2 * y3 - x3 * y2);
-		a = (x1 - b * x3) / x2;
-		printf("a=%d*b + %d*c \n", a,b);
+		int a = 0, b = 0, c=0;
+		a = (x2 * y3 - x3 * y2) * x2;
+		c = (x2 * y1 - x1 * y2)*x2;
+		b = x1 * (x2 * y3 - x3 * y2) - x3 * (x2 * y1 - x1 * y2);
+		printf("%d a=%d*b + %d*c \n", a,b,c);
 	}
 	return 0;
 }
+
