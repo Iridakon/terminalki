@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <math.h>
+#include <locale.h>
+#include <malloc.h>
+
+float det(float** a, int n) {
+    if (n == 1) return a[0][0];
+    else
+    {
+        int nul = 1; //проверяем, если 1 столбец заполнен нулями
+        for (int i = 0; i < n; i++) {
+            if (a[i][0] != 0) nul = 0;
+        }
+        if (nul == 1) return 0; // если 1 столбец нулевой, определитель равен нулю
+        else
+        {
+            
+            if (a[0][0] == 0) {  //если а11=0, элементарными преобразованиями исправляем
+                int t = 0;
+                while (a[t][0] == 0) t++;
+                for (int l = 0; l < n; l++) {
+                    a[1][l] += a[t][l];
+                }
+            }
+            for (int i = 1; i < n; i++) { //отнимаем 1 строку с коэфицентом от остальных
+                if (a[i][0] != 0) {
+                    float kof = a[i][0] / a[0][0]; //находим коэфицент
+                    for (int s = 0; s < n; s++) {
+                        a[i][s] = a[i][s] - a[0][s] * (kof);
+                    }
+                }
+            }
+        }
+
+        /*
+        for (int g = 0; g < n; g++)  // цикл по строкам
+        {
+            for (int h = 0; h < n; h++)  // цикл по столбцам
+            {
+                printf("%5f ", a[g][h]); // 5 знакомест под элемент массива
+            }
+            printf("\n");
+        }
+        printf("\\\\\n");
+
+        */
+        float** b;  // создаем матрицу с вычеркнутыми 1 строкой и столбцом
+        b = (float**)malloc((n - 1) * sizeof(float*));
+        // Ввод элементов массива
+        for (int i = 0; i < n - 1; i++)
+        {
+            b[i] = (float*)malloc((n - 1) * sizeof(float));
+            
+            for (int j = 0; j < n - 1; j++)
+            {
+                b[i][j] = a[i + 1][j + 1];
+            }
+        }
+        float d = det(b, n - 1);
+        return a[0][0] * d; 
+
+
+    }
+
+}
+
+
+int main()
+{
+    setlocale(LC_ALL, "Rus");
+    int n = 0;
+    printf("Введите размер матрицы  \n");
+    scanf_s("%d", &n);
+    printf("Ведите элементы матрицы\n");
+    
+    float** a;
+    a = (float**)malloc(n * sizeof(float*));
+    // Ввод элементов массива
+    for (int i = 0; i < n; i++)
+    {
+        a[i] = (float*)malloc(n * sizeof(float));
+        //printf("Введите координаты %d-го вектора \n", 1 + i);
+        for (int j = 0; j < n; j++)
+        {
+            scanf_s("%f", &a[i][j]);
+        }
+    }
+    float m = det(a, n);
+    printf("Определитель матрицы  %f\n",m);
+
+    //for (int i = 0; i < n; i++)  // цикл по строкам
+    //{
+    //    for (int j = 0; j < n; j++)  // цикл по столбцам
+    //    {
+    //        printf("%5f ", a[i][j]); // 5 знакомест под элемент массива
+    //    }
+    //    printf("\n");
+    //}
+    //printf("\\\\\n");
+   
+
+    return 0;
+}
