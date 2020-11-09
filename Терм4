@@ -19,7 +19,7 @@ float det(float** a, int n) {
                 int t = 0;
                 while (a[t][0] == 0) t++;
                 for (int l = 0; l < n; l++) {
-                    a[1][l] += a[t][l];
+                    a[0][l] += a[t][l];
                 }
             }
             for (int i = 1; i < n; i++) { //отнимаем 1 строку с коэфицентом от остальных
